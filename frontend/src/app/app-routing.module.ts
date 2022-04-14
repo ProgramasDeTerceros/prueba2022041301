@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { ListaPartidosComponent } from "./modules/lista-partidos/lista-partidos.component";
-import { PartidoComponent } from "./modules/partido/partido.component";
+import { SeePartidoComponent } from "./modules/see-partido/see-partido.component";
 const routes: Routes = [
-  { path:"partidos",component:ListaPartidosComponent},
-  { path:"partido/:id",component:PartidoComponent},
-  { path: "**", pathMatch: "full", redirectTo: "partidos" },
+  { path: "partido", component: ListaPartidosComponent },
+  { path: "partido/:id", component: SeePartidoComponent },
+  { path: "**", pathMatch: "full", redirectTo: "partido" },
 ];
 
 @NgModule({

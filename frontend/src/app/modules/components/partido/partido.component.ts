@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { PartidoModel } from 'src/app/shared/models/partido-model';
 
 @Component({
   selector: 'app-partido',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PartidoComponent implements OnInit {
 
+  @Input() public data?: PartidoModel;
   constructor() { }
 
   ngOnInit(): void {
