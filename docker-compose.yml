@@ -29,6 +29,9 @@ services:
       - 3000:3000
     depends_on:
       - database
+    dns:
+      - 8.8.8.8 
+      - 8.8.4.4
     networks:
       - backend
       - frontend

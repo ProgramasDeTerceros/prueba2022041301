@@ -5,6 +5,7 @@ import {
 } from "../shared/models/partido-model";
 import { RespModel } from "../shared/models/resp-model";
 import express from "express";
+import { FootballDataService } from "../services/footballDataService";
 export class PartidoController {
   private static areaTest: PartidoModel[] = [
     {
@@ -26,10 +27,26 @@ export class PartidoController {
       awayTeam: { id: 2, name: "111" },
     },
   ];
+  public static UpdateData = async () => {
+    const NewData = await FootballDataService.GetData();
+    const listaPartidos: Array<PartidoModel> = NewData["matches"];
+    //console.log({ listaPartidos });
+    return listaPartidos.forEach(async (x) => {
+      const valor = await this.GetByID(x.id);
+      //console.log({ valor });
+      if (valor != null) {
+        return;
+      }
+      //console.log({ x });
+      await this.create(x);
+    });
+  };
   public static getList = async (req: express.Request, res: RespModel) => {
+    await this.UpdateData();
     let result = await this.Get();
-    console.log(result);
+    //console.log(result);
     res.data = result;
+    console.log("carga final")
     return;
   };
 
@@ -41,7 +58,7 @@ export class PartidoController {
       return;
     }
     let result = await this.GetByID(id);
-    console.log(result);
+    //console.log(result);
     res.data = result;
     return;
   };
@@ -73,6 +90,12 @@ export class PartidoController {
     let newPartido = new PartidoDb();
     newPartido.id = partido.id;
     newPartido.status = partido.status;
+    if (partido.homeTeam.id == null) {
+      return;
+    }
+    if (partido.awayTeam.id == null) {
+      return;
+    }
     newPartido.homeTeam = partido.homeTeam;
     newPartido.awayTeam = partido.awayTeam;
     return newPartido.save();
