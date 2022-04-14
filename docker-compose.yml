@@ -4,8 +4,16 @@ services:
     build: frontend
     container_name: angular-fr
     ports:
-      - 9000:80
+      - 4200:80
     networks:
+      - frontend
+  backend:
+    build: backend
+    container_name: node-express-bk
+    ports:
+      - 3000:3000
+    networks:
+      - backend
       - frontend
 
 networks:
