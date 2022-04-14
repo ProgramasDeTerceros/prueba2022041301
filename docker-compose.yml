@@ -7,15 +7,31 @@ services:
       - 4200:80
     networks:
       - frontend
+  database:
+    image: mongo
+    container_name: mongo-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin-user
+      - MONGO_INITDB_ROOT_PASSWORD=admin-password
+      - MONGO_DB=soccer
+    volumes:
+      - .database/mongo:/home/mongodb
+      - .database/mongo/init-db.d/:/docker-entrypoint-initdb.d/
+      - .database/mongo/db:/data/db
+    ports:
+      - 27017:27017
   backend:
     build: backend
     container_name: node-express-bk
     ports:
       - 3000:3000
+    depends_on:
+      - database
+    links:
+      - database
     networks:
       - backend
       - frontend
-
 networks:
   frontend:
   backend:
