@@ -1,4 +1,8 @@
-import { PartidoModel } from "../shared/models/partido-model";
+import {
+  PartidoModel,
+  PartidoDb,
+  partidoGetID,
+} from "../shared/models/partido-model";
 import { RespModel } from "../shared/models/resp-model";
 import express from "express";
 export class PartidoController {
@@ -22,22 +26,65 @@ export class PartidoController {
       awayTeam: { id: 2, name: "111" },
     },
   ];
-  public static getList = (req: express.Request, res: RespModel): void => {
-    res.data = this.areaTest;
+  public static getList = async (req: express.Request, res: RespModel) => {
+    let result = await this.Get();
+    console.log(result);
+    res.data = result;
+    return;
   };
 
-  public static get = (req: express.Request, res: RespModel): void => {
+  public static get = async (req: express.Request, res: RespModel) => {
     const { id } = req.params;
     if (!id) {
       res.code = 404;
       res.message = "Bad Request";
       return;
     }
-    res.data = this.areaTest.find((x) => x.id == id);
+    let result = await this.GetByID(id);
+    console.log(result);
+    res.data = result;
+    return;
+  };
+
+  private static Get = () => {
+    return PartidoDb.find({})
+      .exec()
+      .then((someValue) => {
+        //console.log(someValue);
+        return someValue;
+      })
+      .catch((err) => {
+        return "error occured";
+      });
+  };
+  private static GetByID = (id) => {
+    return PartidoDb.findOne({ id })
+      .exec()
+      .then((someValue) => {
+        //console.log(someValue);
+        return someValue;
+      })
+      .catch((err) => {
+        return "error occured";
+      });
+  };
+
+  private static create = (partido) => {
+    let newPartido = new PartidoDb();
+    newPartido.id = partido.id;
+    newPartido.status = partido.status;
+    newPartido.homeTeam = partido.homeTeam;
+    newPartido.awayTeam = partido.awayTeam;
+    return newPartido.save();
   };
 
   public static post = (req: express.Request, res: RespModel): void => {
     const body = req.body;
     res.data = body;
   };
+
+  public static index = (id) => {
+    return PartidoDb.findById(id);
+  };
+  public static new = () => {};
 }
