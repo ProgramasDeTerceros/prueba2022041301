@@ -1,10 +1,9 @@
 <app-loading *ngIf="!data"></app-loading>
-<h2 *ngIf="data">No se encontraron partido</h2>
 <section *ngIf="data">
 	<div>
-		Estado:<span>{{data.status}}</span>
-		Partido:<span>{{data.id}}</span>
-		Local:<span>{{data.homeTeam.id}}:{{data.homeTeam.name}}</span>
-		visitante:<span>{{data.awayTeam}}:{{data.awayTeam.name}}</span>
+		Estado: <span>{{data.status}}</span><br>
+		Partido: <span>{{data.id}}</span><br>
+		Local: <span>{{data.homeTeam.id}}:{{data.homeTeam.name}}</span><br>
+		visitante: <span>{{data.awayTeam.id}}:{{data.awayTeam.name}}</span>
 	</div>
 </section>

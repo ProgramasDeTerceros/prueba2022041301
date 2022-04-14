@@ -14,7 +14,7 @@ export class PartidoService {
   private _urlA: String = "partido";
 
   getList(c: number): Observable<PartidoModel[]> {
-    return this._api.GetQuery(`${this._urlA}/list/${c}`).pipe(
+    return this._api.GetQuery(`${this._urlA}`).pipe(
       map((data: RespModel) => {
         return <Array<PartidoModel>>data.data;
       })
