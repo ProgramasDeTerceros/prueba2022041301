@@ -20,14 +20,14 @@ services:
       - .database/mongo/db:/data/db
     ports:
       - 27017:27017
+    networks:
+      - backend
   backend:
     build: backend
     container_name: node-express-bk
     ports:
       - 3000:3000
     depends_on:
-      - database
-    links:
       - database
     networks:
       - backend

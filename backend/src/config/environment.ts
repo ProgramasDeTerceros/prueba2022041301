@@ -2,7 +2,7 @@
 
   const MONGO_DB_USERNAME="admin-user";
   const MONGO_DB_PASSWORD="admin-password";
-  const MONGO_DB_HOST="localhost";
+  const MONGO_DB_HOST="database";
   const MONGO_DB_PORT="";
   const MONGO_DB_PARAMETERS="?authSource=admin";
   const MONGO_DB_DATABASE="soccer";
